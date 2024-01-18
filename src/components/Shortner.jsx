@@ -9,11 +9,14 @@ const UrlForm = () => {
   const [customSlug, setCustomSlug] = useState('');
   const [shortUrl, setShortUrl] = useState('');
   const [qrCodeUrl, setQRCodeUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const REBRANDLY_API_KEY = '25b51de08ffd4cdbaec12edc748f727c'; 
-  const toast = useToast()
+  const toast = useToast();
 
   const handleShorten = async () => {
+    setIsLoading(true);  
+
     try {
       const requestData = {
         destination: longUrl,
@@ -41,15 +44,17 @@ const UrlForm = () => {
         status: 'success',
         duration: 9000,
         isClosable: true,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
-      title: 'Something went wrong!',
-      status: 'error',
-      duration: 9000,
-      isClosable: true,
-    }) 
+        title: 'Something went wrong!',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -74,7 +79,7 @@ const UrlForm = () => {
             placeholder="Enter custom slug (optional)"
           />
           
-          <Button m={4} onClick={handleShorten}>
+          <Button m={4} onClick={handleShorten} isLoading={isLoading}>
             Shorten
           </Button>
 
