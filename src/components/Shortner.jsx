@@ -20,7 +20,7 @@ const UrlForm = () => {
       };
 
       if (customSlug) {
-        requestData.title = customSlug;
+        requestData.slashtag = customSlug;
       }
 
       const response = await axios.post(
@@ -43,13 +43,13 @@ const UrlForm = () => {
         isClosable: true,
       })
     } catch (error) {
-      console.error('Error shortening URL:', error);
+      console.log(error)
       toast({
-        title: error.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      })
+      title: 'Something went wrong!',
+      status: 'error',
+      duration: 9000,
+      isClosable: true,
+    }) 
     }
   };
 
